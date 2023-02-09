@@ -1,37 +1,13 @@
-.DS_Store
-node_modules
-/dist
-
-
-# local env files
-.env.local
-.env.*.local
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Created by https://www.toptal.com/developers/gitignore/api/vue,visualstudiocode,windows
-# Edit at https://www.toptal.com/developers/gitignore?templates=vue,visualstudiocode,windows
+# Created by https://www.toptal.com/developers/gitignore/api/vuejs,visualstudiocode,windows
+# Edit at https://www.toptal.com/developers/gitignore?templates=vuejs,visualstudiocode,windows
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+# !.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
@@ -44,16 +20,13 @@ pnpm-debug.log*
 .history
 .ionide
 
-### Vue ###
-# gitignore template for Vue.js projects
-#
+### Vuejs ###
 # Recommended template: Node.gitignore
 
-# TODO: where does this rule come from?
-docs/_book
-
-# TODO: where does this rule come from?
-test/
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -81,4 +54,14 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/vue,visualstudiocode,windows
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
+firebase.json
+
+# End of https://www.toptal.com/developers/gitignore/api/vuejs,visualstudiocode,windows
