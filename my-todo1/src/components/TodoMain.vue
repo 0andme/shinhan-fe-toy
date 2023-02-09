@@ -43,6 +43,9 @@ export default {
   },
   methods: {
     addItem() {
+      if (this.addItemText === "") {
+        return;
+      }
       this.todos.push({
         text: this.addItemText,
         state: "yet",
