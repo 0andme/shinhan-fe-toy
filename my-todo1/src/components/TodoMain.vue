@@ -8,7 +8,7 @@
           <button class="btn add" @click="addItem">Add</button>
         </div>
         <ul class="list">
-          <li v-for="todo in todos" :key="todo.text">
+          <li v-for="(todo, i) in todos" :key="i">
             <i
               :class="[
                 {far: todo.state === 'yet', fas: todo.state === 'done'},
