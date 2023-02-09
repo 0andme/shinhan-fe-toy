@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import {db} from "../firebase/db.js";
 export default {
   data() {
     return {
@@ -56,11 +57,7 @@ export default {
       crrEditItem: "",
       writeState: "add",
       editItemText: "",
-      todos: [
-        {text: "공부하기", state: "yet"},
-        {text: "운동하기", state: "done"},
-        {text: "글쓰기", state: "done"},
-      ],
+      todos: [],
     };
   },
 
@@ -69,10 +66,19 @@ export default {
       if (this.addItemText === "") {
         return;
       }
-      this.todos.push({
-        text: this.addItemText,
-        state: "yet",
-      });
+      // this.todos.push({
+      //   text: this.addItemText,
+      //   state: "yet",
+      // });
+
+      db.collection("todos")
+        .add({
+          text: this.addItemText,
+          state: "yet",
+        })
+        .then((sn) => {
+          db.collection("todos").doc(sn.id).update({id: sn.id});
+        });
       this.addItemText = "";
     },
     checkItem(index) {
@@ -93,15 +99,30 @@ export default {
     editSave() {
       this.$refs.list.children[this.crrEditItem].classList.remove("editing");
 
-      this.todos[this.crrEditItem].text = this.editItemText;
+      // this.todos[this.crrEditItem].text = this.editItemText;
       this.writeState = "add";
+
+      db.collection("todos")
+        .doc(this.todos[this.crrEditItem].id)
+        .update({text: this.editItemText});
     },
     delItem(index) {
-      this.todos.splice(index, 1);
+      db.collection("todos").doc(this.todos[index].id).delete();
+      // this.todos.splice(index, 1);
     },
   },
   mounted() {
     this.$refs.writeArea.focus();
+    db.collection("todos")
+      .get()
+      .then((result) => {
+        result.forEach((doc) => {
+          this.todos.push(doc.data());
+        });
+      });
+  },
+  firestore: {
+    todos: db.collection("todos"),
   },
 };
 </script>
