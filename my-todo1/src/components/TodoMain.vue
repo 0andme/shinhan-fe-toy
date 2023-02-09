@@ -72,6 +72,7 @@ export default {
         .add({
           text: this.addItemText,
           state: "yet",
+          createdAt: new Date(),
         })
         .then((sn) => {
           db.collection("todos").doc(sn.id).update({id: sn.id});
@@ -80,7 +81,7 @@ export default {
           //   text: this.addItemText,
           //   state: "yet",
           // });
-          // this.addItemText = "";
+          this.addItemText = "";
         });
     },
     checkItem(index) {
@@ -128,7 +129,7 @@ export default {
     //     });
   },
   firestore: {
-    todos: db.collection("todos"),
+    todos: db.collection("todos").orderBy("createdAt", "desc"),
   },
 };
 </script>
