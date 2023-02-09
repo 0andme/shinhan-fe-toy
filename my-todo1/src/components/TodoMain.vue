@@ -27,6 +27,7 @@
         </transition>
         <ul class="list" ref="list">
           <li v-for="(todo, i) in todos" :key="i">
+            <!-- 체크 아이콘 -->
             <i
               @click="checkItem(i)"
               :class="[
@@ -85,9 +86,13 @@ export default {
     checkItem(index) {
       let state = this.todos[index].state;
       if (state === "yet") {
-        this.todos[index].state = "done";
+        // this.todos[index].state = "done";
+        db.collection("todos")
+          .doc(this.todos[index].id)
+          .update({state: "done"});
       } else {
-        this.todos[index].state = "yet";
+        // this.todos[index].state = "yet";
+        db.collection("todos").doc(this.todos[index].id).update({state: "yet"});
       }
     },
     editShow(index) {
