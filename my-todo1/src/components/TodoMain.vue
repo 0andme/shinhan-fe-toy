@@ -66,10 +66,6 @@ export default {
       if (this.addItemText === "") {
         return;
       }
-      // this.todos.push({
-      //   text: this.addItemText,
-      //   state: "yet",
-      // });
 
       db.collection("todos")
         .add({
@@ -78,8 +74,13 @@ export default {
         })
         .then((sn) => {
           db.collection("todos").doc(sn.id).update({id: sn.id});
+          // this.todos.push({
+          //   id: sn.id,
+          //   text: this.addItemText,
+          //   state: "yet",
+          // });
+          // this.addItemText = "";
         });
-      this.addItemText = "";
     },
     checkItem(index) {
       let state = this.todos[index].state;
@@ -90,21 +91,21 @@ export default {
       }
     },
     editShow(index) {
-      this.$refs.writeArea.focus();
       this.crrEditItem = index;
       this.writeState = "edit";
       this.editItemText = this.todos[index].text;
       this.$refs.list.children[index].classList.add("editing");
+      this.$refs.writeArea.focus();
     },
     editSave() {
-      this.$refs.list.children[this.crrEditItem].classList.remove("editing");
-
-      // this.todos[this.crrEditItem].text = this.editItemText;
       this.writeState = "add";
 
       db.collection("todos")
         .doc(this.todos[this.crrEditItem].id)
         .update({text: this.editItemText});
+
+      // this.todos[this.crrEditItem].text = this.editItemText;
+      this.$refs.list.children[this.crrEditItem].classList.remove("editing");
     },
     delItem(index) {
       db.collection("todos").doc(this.todos[index].id).delete();
@@ -113,13 +114,13 @@ export default {
   },
   mounted() {
     this.$refs.writeArea.focus();
-    db.collection("todos")
-      .get()
-      .then((result) => {
-        result.forEach((doc) => {
-          this.todos.push(doc.data());
-        });
-      });
+    //   db.collection("todos")
+    //     .get()
+    //     .then((result) => {
+    //       result.forEach((doc) => {
+    //         this.todos.push(doc.data());
+    //       });
+    //     });
   },
   firestore: {
     todos: db.collection("todos"),
