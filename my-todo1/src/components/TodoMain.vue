@@ -1,6 +1,32 @@
 <template>
   <div class="page">
-    <header><h1>Vue Fire todo1</h1></header>
+    <header>
+      <h1>
+        Vue Fire todo1
+        <span class="pie">
+          <svg viewBox="0 0 64 64">
+            <circle
+              class="pie"
+              r="32"
+              cx="32"
+              cy="32"
+              style="stroke-width: 64"
+            ></circle>
+            <circle
+              class="slice"
+              r="32"
+              cx="32"
+              cy="32"
+              :style="{
+                strokeWidth: 64,
+                strokeDasharray: totalTodo + ', 201',
+                transition: 'all 0.3s linear',
+              }"
+            ></circle>
+          </svg>
+        </span>
+      </h1>
+    </header>
     <main>
       <div class="todos">
         <transition name="fade">
@@ -127,6 +153,15 @@ export default {
     //         this.todos.push(doc.data());
     //       });
     //     });
+  },
+  computed: {
+    totalTodo() {
+      let doneNum = 0;
+      this.todos.forEach((item) => {
+        if (item.state === "done") doneNum++;
+      });
+      return (doneNum / this.todos.length) * 201;
+    },
   },
   firestore: {
     todos: db.collection("todos").orderBy("createdAt", "desc"),
